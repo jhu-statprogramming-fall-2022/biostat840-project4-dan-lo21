@@ -1,0 +1,1 @@
+"0","latin_playlists <- unique(spotify['playlist_name'])[str_detect(unique(spotify$playlist_name), c(""Latin|latin|Chicano|LATIN"")),]$playlist_name"

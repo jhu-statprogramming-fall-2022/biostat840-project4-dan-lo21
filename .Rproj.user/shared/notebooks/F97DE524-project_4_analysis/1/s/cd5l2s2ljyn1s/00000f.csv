@@ -1,0 +1,4 @@
+"0","popularity <- latin_songs %>% filter(track_popularity>0) %>% group_by(track_artist) %>% summarize(mean_popularity = mean(track_popularity), n=n()) %>% filter(n>=10, mean_popularity>50)"
+"0","popular_names <- popularity[order(-popularity$mean_popularity),] %>% head(9)"
+"0","latin_songs %>% filter(track_artist %in% popular_names$track_artist) %>% select(track_artist, track_popularity, valence) %>% ggplot(aes(x=track_popularity, y=valence, color=track_artist)) + facet_wrap(~track_artist) + geom_point() + labs(x='Track Popularity', y='Track Valence', title='Track Valence vs Track Popularity per Artist', subtitle = ""there doesn't seem to be any correlation between track valence and track popularity. Some artists \nhave high popularity for each track regardless of valence, such as Shakira and J Balvin."", color='Track Artist')"
+"0",""

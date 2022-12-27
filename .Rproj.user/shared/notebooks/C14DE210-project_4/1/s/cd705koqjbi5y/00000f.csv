@@ -1,0 +1,3 @@
+"0","top_artists <- latin_songs %>% group_by(track_artist) %>% summarise(n=n(), latest=max(track_album_release_date), longest = min(track_album_release_date), mean_duration_m = mean(duration_m), mean_popularity = mean(track_popularity))"
+"0","top_artists <- top_artists[order(-top_artists$mean_popularity),] %>% filter(n >= 10, mean_popularity>0) %>% head(6)"
+"0","top_artists"
