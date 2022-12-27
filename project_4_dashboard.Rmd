@@ -19,6 +19,8 @@ library(stringr)
 library(lubridate)
 library(purrr)
 library(magrittr)
+library(rsconnect)
+library(MASS)
 knitr::opts_chunk$set(fig.width = 5, fig.asp = 1/3)
 ```
 
@@ -46,7 +48,7 @@ latin_playlists <- unique(spotify['playlist_name'])[str_detect(unique(spotify$pl
 ```
 
 ```{r}
-latin_songs <- spotify %>% filter(playlist_name %in% latin_playlists)  %>% select(-c('playlist_name', 'playlist_id', 'playlist_genre', 'playlist_subgenre')) %>% mutate(duration_m=(duration_ms / 60000))
+latin_songs <- spotify %>% filter(playlist_name %in% latin_playlists)  %>% dplyr::select(-c('playlist_name', 'playlist_id', 'playlist_genre', 'playlist_subgenre')) %>% mutate(duration_m=(duration_ms / 60000))
 latin_songs <- latin_songs[str_detect(latin_songs$track_album_release_date,"[0-9]{4}-[0-9]{2}-[0-9]{2}"),] %>% mutate(track_album_release_date=ymd(track_album_release_date))
 latin_songs <- latin_songs[!duplicated(latin_songs),]
 ```
@@ -119,7 +121,7 @@ latin_songs_3 <- latin_songs
 
 latin_songs_3 %<>% filter(track_artist =='Shakira') 
 
-latin_songs_3 %<>% select(track_artist, track_popularity, valence) 
+latin_songs_3 %<>% dplyr::select(track_artist, track_popularity, valence) 
 
 latin_songs_3 %<>% ggplot(aes(x=track_popularity, y=valence)) + geom_point() + labs(x='Track Popularity', y='Track Valence', title='Track Valence vs Track Popularity for Shakira') + xlim(0,100) + ylim(0,1)
 ```
@@ -131,7 +133,7 @@ latin_songs_3 <- latin_songs
 
 latin_songs_3 %<>% filter(track_artist =='Daddy Yankee') 
 
-latin_songs_3 %<>% select(track_artist, track_popularity, valence) 
+latin_songs_3 %<>% dplyr::select(track_artist, track_popularity, valence) 
 
 latin_songs_3 %<>% ggplot(aes(x=track_popularity, y=valence)) + geom_point() + labs(x='Track Popularity', y='Track Valence', title='Track Valence vs Track Popularity for Daddy Yankee') + xlim(0,100) + ylim(0,1)
 ```
@@ -143,7 +145,7 @@ latin_songs_3 <- latin_songs
 
 latin_songs_3 %<>% filter(track_artist =='Ozuna') 
 
-latin_songs_3 %<>% select(track_artist, track_popularity, valence) 
+latin_songs_3 %<>% dplyr::select(track_artist, track_popularity, valence) 
 
 latin_songs_3 %<>% ggplot(aes(x=track_popularity, y=valence)) + geom_point() + labs(x='Track Popularity', y='Track Valence', title='Track Valence vs Track Popularity for Ozuna') + xlim(0,100) + ylim(0,1)
 ```
@@ -198,7 +200,7 @@ latin_songs_1 %<>% filter(track_artist == input$top_latin_star, track_popularity
 
 year_of_release <- min(year(latin_songs_1$track_album_release_date))
   
-latin_songs_1 %<>% select(track_artist, track_popularity, track_album_release_date) 
+latin_songs_1 %<>% dplyr::select(track_artist, track_popularity, track_album_release_date) 
 
 latin_songs_1 %<>% group_by(track_artist, track_album_release_date) 
 
@@ -252,7 +254,7 @@ latin_playlists <- unique(spotify['playlist_name'])[str_detect(unique(spotify$pl
 ```
 
 ```{r}
-latin_songs <- spotify %>% filter(playlist_name %in% latin_playlists)  %>% select(-c('playlist_name', 'playlist_id', 'playlist_genre', 'playlist_subgenre')) %>% mutate(duration_m=(duration_ms / 60000))
+latin_songs <- spotify %>% filter(playlist_name %in% latin_playlists)  %>% dplyr::select(-c('playlist_name', 'playlist_id', 'playlist_genre', 'playlist_subgenre')) %>% mutate(duration_m=(duration_ms / 60000))
 latin_songs <- latin_songs[str_detect(latin_songs$track_album_release_date,"[0-9]{4}-[0-9]{2}-[0-9]{2}"),] %>% mutate(track_album_release_date=ymd(track_album_release_date))
 latin_songs <- latin_songs[!duplicated(latin_songs),]
 ```
@@ -282,7 +284,7 @@ top_artist_list <- top_artists$track_artist
 ### Track Popularity for Top 6 Artists
 
 ```{r}
-latin_songs %>% filter(track_artist %in% top_artist_list, track_popularity > 0, track_album_release_date > '2007-01-01') %>% select(track_artist, track_popularity, track_album_release_date) %>% group_by(track_artist, track_album_release_date) %>% summarize(track_popularity=mean(track_popularity)) %>% ggplot(aes(x=track_album_release_date, y=track_popularity, color=track_artist))  + geom_line() + labs(x = 'Track Album Release Date', y='Track Popularity Score', title='Track Popularity Score for 6 Most Popular Artists', subtitle = 'Some artist such as Daddy Yankee and Shakira have had tracks with fairly high popularity scores. \nOn the other hand, the other artists have had tracks with high track popularity scores, as well as \nlow scores.', color='Track Artists')
+latin_songs %>% filter(track_artist %in% top_artist_list, track_popularity > 0, track_album_release_date > '2007-01-01') %>% dplyr::select(track_artist, track_popularity, track_album_release_date) %>% group_by(track_artist, track_album_release_date) %>% summarize(track_popularity=mean(track_popularity)) %>% ggplot(aes(x=track_album_release_date, y=track_popularity, color=track_artist))  + geom_line() + labs(x = 'Track Album Release Date', y='Track Popularity Score', title='Track Popularity Score for 6 Most Popular Artists', subtitle = 'Some artist such as Daddy Yankee and Shakira have had tracks with fairly high popularity scores. \nOn the other hand, the other artists have had tracks with high track popularity scores, as well as \nlow scores.', color='Track Artists')
 ```
 
 ### Valence vs. Track Popularity
@@ -290,7 +292,7 @@ latin_songs %>% filter(track_artist %in% top_artist_list, track_popularity > 0, 
 ```{r}
 popularity <- latin_songs %>% filter(track_popularity>0) %>% group_by(track_artist) %>% summarize(mean_popularity = mean(track_popularity), n=n()) %>% filter(n>=10, mean_popularity>50)
 popular_names <- popularity[order(-popularity$mean_popularity),] %>% head(9)
-latin_songs %>% filter(track_artist %in% popular_names$track_artist) %>% select(track_artist, track_popularity, valence) %>% ggplot(aes(x=track_popularity, y=valence, color=track_artist)) + facet_wrap(~track_artist) + geom_point() + labs(x='Track Popularity', y='Track Valence', title='Track Valence vs Track Popularity per Artist', subtitle = "there doesn't seem to be any correlation between track valence and track popularity. Some artists \nhave high popularity for each track regardless of valence, such as Shakira and J Balvin.", color='Track Artist')
+latin_songs %>% filter(track_artist %in% popular_names$track_artist) %>% dplyr::select(track_artist, track_popularity, valence) %>% ggplot(aes(x=track_popularity, y=valence, color=track_artist)) + facet_wrap(~track_artist) + geom_point() + labs(x='Track Popularity', y='Track Valence', title='Track Valence vs Track Popularity per Artist', subtitle = "there doesn't seem to be any correlation between track valence and track popularity. Some artists \nhave high popularity for each track regardless of valence, such as Shakira and J Balvin.", color='Track Artist')
 
 ```
 

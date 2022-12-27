@@ -1,2 +1,0 @@
-"0","latin_songs[order(-latin_songs$track_popularity),][1:500,] %>% ggplot(aes(x=duration_m, y=track_popularity)) + geom_point() + "
-"0","  guides(color='none') + labs(x='Track Duration (minutes)', y='Track Popularity Score', title='Track Popularity per Duration in minutes', subtitle = 'There seems to be no correlation between track popularity and track duration for the 500 tracks \nwith top popularity score. Most tracks seem to be in between 3 and 4 minutes long.') "

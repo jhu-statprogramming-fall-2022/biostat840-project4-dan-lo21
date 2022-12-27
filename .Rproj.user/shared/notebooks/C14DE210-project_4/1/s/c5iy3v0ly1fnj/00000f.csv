@@ -1,6 +1,0 @@
-"0","if(!file.exists(here(""data"",""spotify.RDS""))){"
-"0","  spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')"
-"0","  "
-"0","  # save the files to RDS objects"
-"0","  saveRDS(spotify_songs, file = here(""data"",""spotify.RDS""))"
-"0","}"

@@ -1,3 +1,0 @@
-"0","if(!dir.exists(here('data'))){"
-"0","  dir.create(here('data'))"
-"0","}"
