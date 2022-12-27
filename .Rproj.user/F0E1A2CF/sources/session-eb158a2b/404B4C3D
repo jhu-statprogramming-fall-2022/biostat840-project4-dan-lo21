@@ -3,7 +3,7 @@
     "path": "~/Desktop/project_4/project_4_dashboard.Rmd",
     "project_path": "project_4_dashboard.Rmd",
     "type": "r_markdown",
-    "hash": "1980764426",
+    "hash": "4173336651",
     "contents": "",
     "dirty": false,
     "created": 1672000976540.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "99,34",
-        "scrollLine": "96"
+        "cursorPosition": "73,0",
+        "scrollLine": "68"
     },
     "folds": "",
-    "lastKnownWriteTime": 1672103924,
+    "lastKnownWriteTime": 1672114142,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1672103924924,
+    "last_content_update": 1672114142552,
     "read_only": false,
     "read_only_alternatives": []
 }
